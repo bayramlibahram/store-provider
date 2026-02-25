@@ -1,0 +1,30 @@
+{
+  "name": "storage-provider",
+  "version": "1.0.0",
+  "description": "A lightweight storage provider for web applications.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "storage",
+    "provider",
+    "browser-storage",
+    "localstorage"
+  ],
+  "author": "Bahram Bayramli <bahram.bayramli@example.com>",
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bahrambayramli/storage-provider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bahrambayramli/storage-provider/issues"
+  },
+  "homepage": "https://github.com/bahrambayramli/storage-provider#readme",
+  "devDependencies": {
+    "prettier": "^3.5.2"
+  }
+}
