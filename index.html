@@ -1,483 +1,482 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Storage Provider Documentation</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8"/>
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Store Provider Documentation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-          Cantarell, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background-color: #f5f5f5;
-      }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+      Cantarell, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f5f5;
+    }
 
-      .header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 2rem 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-      .header .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem;
-      }
+    .header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
 
-      .header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-      }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
 
-      .header p {
-        font-size: 1.1rem;
-        opacity: 0.9;
-      }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
 
-      .nav {
-        background-color: white;
-        position: sticky;
-        top: 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        z-index: 100;
-      }
+    .nav {
+      background-color: white;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
 
-      .nav .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem;
-        display: flex;
-        gap: 2rem;
-      }
+    .nav .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 2rem;
+    }
 
-      .nav a {
-        color: #667eea;
-        text-decoration: none;
-        padding: 1rem 0;
-        border-bottom: 3px solid transparent;
-        transition: all 0.3s;
-        font-weight: 500;
-      }
+    .nav a {
+      color: #667eea;
+      text-decoration: none;
+      padding: 1rem 0;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
 
-      .nav a:hover {
-        border-bottom-color: #667eea;
-      }
+    .nav a:hover {
+      border-bottom-color: #667eea;
+    }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-      }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
 
+    .content-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .sidebar {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+    }
+
+    .sidebar h3 {
+      color: #667eea;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar a {
+      color: #666;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #667eea;
+    }
+
+    .main-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      color: #667eea;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f0f0f0;
+      font-size: 2rem;
+    }
+
+    h3 {
+      color: #764ba2;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .code-block {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      padding: 1.5rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .method-card {
+      background-color: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .method-card h4 {
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .param-list {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+
+    .param-list dt {
+      font-weight: bold;
+      color: #667eea;
+      margin-top: 0.5rem;
+    }
+
+    .param-list dd {
+      margin-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #666;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background-color: #667eea;
+      color: white;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      margin-left: 0.5rem;
+    }
+
+    .example-box {
+      background-color: #f0f4ff;
+      border: 1px solid #d0d9f5;
+      padding: 1rem;
+      border-radius: 6px;
+      margin: 1rem 0;
+    }
+
+    .footer {
+      background-color: #2d2d2d;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
       .content-grid {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
+        grid-template-columns: 1fr;
       }
 
       .sidebar {
-        background-color: white;
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        height: fit-content;
-        position: sticky;
-        top: 80px;
+        position: static;
       }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <h1>Store Provider</h1>
+    <p>A flexible abstraction layer for web store management</p>
+  </div>
+</header>
 
-      .sidebar h3 {
-        color: #667eea;
-        margin-bottom: 1rem;
-        font-size: 1.1rem;
-      }
+<nav class="nav">
+  <div class="container">
+    <a href="#overview">Overview</a>
+    <a href="#installation">Installation</a>
+    <a href="#usage">Usage</a>
+    <a href="#api">API Reference</a>
+    <a href="#examples">Examples</a>
+  </div>
+</nav>
 
-      .sidebar ul {
-        list-style: none;
-      }
+<div class="container">
+  <div class="content-grid">
+    <aside class="sidebar">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#usage">Getting Started</a></li>
+        <li><a href="#api">API Reference</a></li>
+        <li><a href="#constructor">Constructor</a></li>
+        <li><a href="#methods">Methods</a></li>
+        <li><a href="#examples">Examples</a></li>
+      </ul>
+    </aside>
 
-      .sidebar li {
-        margin-bottom: 0.5rem;
-      }
+    <main class="main-content">
+      <section id="overview">
+        <h2>Overview</h2>
+        <p>
+          Store Provider is a powerful abstraction layer that provides a
+          unified interface for managing data storage in web applications.
+          It supports multiple storage backends including in-memory storage,
+          localStorage, and sessionStorage.
+        </p>
+      </section>
 
-      .sidebar a {
-        color: #666;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
+      <section id="features">
+        <h3>Features</h3>
+        <ul>
+          <li>
+            ✓ Multiple storage backends (memory, localStorage,
+            sessionStorage)
+          </li>
+          <li>
+            ✓ Automatic fallback to memory storage when web storage is
+            unavailable
+          </li>
+          <li>✓ Custom key prefixing for namespace isolation</li>
+          <li>✓ Automatic JSON serialization/deserialization</li>
+          <li>✓ Server-side rendering (SSR) compatible</li>
+          <li>✓ TypeScript type definitions included</li>
+        </ul>
+      </section>
 
-      .sidebar a:hover {
-        color: #667eea;
-      }
+      <section id="installation">
+        <h2>Installation</h2>
+        <p>
+          Copy <code>store-provider.js</code> to your project and import it
+          as an ES module:
+        </p>
+        <div class="code-block">
+          import StoreProvider from './store-provider.js';
+        </div>
+      </section>
 
-      .main-content {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      }
+      <section id="usage">
+        <h2>Getting Started</h2>
+        <h3>Basic Usage</h3>
+        <div class="code-block">
+          // Create a new store provider instance const store = new
+          StoreProvider({ storeType: 'localStorage', prefix: 'myapp' }); //
+          Store a value (objects are automatically serialized)
+          store.setValue('user', { name: 'John', age: 30 }); // Retrieve a
+          value (automatically deserialized) const user =
+          store.getValue('user'); // Remove a value
+          store.removeValue('user');
+        </div>
+      </section>
 
-      section {
-        margin-bottom: 3rem;
-      }
+      <section id="api">
+        <h2>API Reference</h2>
 
-      h2 {
-        color: #667eea;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #f0f0f0;
-        font-size: 2rem;
-      }
+        <div id="constructor">
+          <h3>Constructor</h3>
+          <div class="method-card">
+            <h4>
+              new StoreProvider(options)
+              <span class="badge">constructor</span>
+            </h4>
+            <p>Creates a new instance of StoreProvider.</p>
 
-      h3 {
-        color: #764ba2;
-        margin-top: 1.5rem;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-      }
+            <dl class="param-list">
+              <dt>options.storeType</dt>
+              <dd>
+                Type:
+                <code>"memory" | "localStorage" | "sessionStorage"</code
+                ><br/>Default: <code>"localStorage"</code><br/>The storage
+                backend to use.
+              </dd>
 
-      .code-block {
-        background-color: #2d2d2d;
-        color: #f8f8f2;
-        padding: 1.5rem;
-        border-radius: 6px;
-        overflow-x: auto;
-        margin: 1rem 0;
-        font-family: 'Courier New', monospace;
-        font-size: 0.9rem;
-        line-height: 1.5;
-      }
+              <dt>options.prefix</dt>
+              <dd>
+                Type: <code>string</code><br/>Default:
+                <code>"test-app"</code><br/>Prefix for all storage keys to
+                avoid collisions.
+              </dd>
+            </dl>
 
-      .method-card {
-        background-color: #f9f9f9;
-        border-left: 4px solid #667eea;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        border-radius: 4px;
-      }
-
-      .method-card h4 {
-        color: #333;
-        margin-bottom: 0.5rem;
-      }
-
-      .param-list {
-        background-color: white;
-        padding: 1rem;
-        border-radius: 4px;
-        margin-top: 1rem;
-      }
-
-      .param-list dt {
-        font-weight: bold;
-        color: #667eea;
-        margin-top: 0.5rem;
-      }
-
-      .param-list dd {
-        margin-left: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: #666;
-      }
-
-      .badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        background-color: #667eea;
-        color: white;
-        border-radius: 12px;
-        font-size: 0.85rem;
-        margin-left: 0.5rem;
-      }
-
-      .example-box {
-        background-color: #f0f4ff;
-        border: 1px solid #d0d9f5;
-        padding: 1rem;
-        border-radius: 6px;
-        margin: 1rem 0;
-      }
-
-      .footer {
-        background-color: #2d2d2d;
-        color: white;
-        text-align: center;
-        padding: 2rem;
-        margin-top: 3rem;
-      }
-
-      @media (max-width: 768px) {
-        .content-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .sidebar {
-          position: static;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="header">
-      <div class="container">
-        <h1>Storage Provider</h1>
-        <p>A flexible abstraction layer for web storage management</p>
-      </div>
-    </header>
-
-    <nav class="nav">
-      <div class="container">
-        <a href="#overview">Overview</a>
-        <a href="#installation">Installation</a>
-        <a href="#usage">Usage</a>
-        <a href="#api">API Reference</a>
-        <a href="#examples">Examples</a>
-      </div>
-    </nav>
-
-    <div class="container">
-      <div class="content-grid">
-        <aside class="sidebar">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#installation">Installation</a></li>
-            <li><a href="#usage">Getting Started</a></li>
-            <li><a href="#api">API Reference</a></li>
-            <li><a href="#constructor">Constructor</a></li>
-            <li><a href="#methods">Methods</a></li>
-            <li><a href="#examples">Examples</a></li>
-          </ul>
-        </aside>
-
-        <main class="main-content">
-          <section id="overview">
-            <h2>Overview</h2>
-            <p>
-              Storage Provider is a powerful abstraction layer that provides a
-              unified interface for managing data storage in web applications.
-              It supports multiple storage backends including in-memory storage,
-              localStorage, and sessionStorage.
-            </p>
-          </section>
-
-          <section id="features">
-            <h3>Features</h3>
-            <ul>
-              <li>
-                ✓ Multiple storage backends (memory, localStorage,
-                sessionStorage)
-              </li>
-              <li>
-                ✓ Automatic fallback to memory storage when web storage is
-                unavailable
-              </li>
-              <li>✓ Custom key prefixing for namespace isolation</li>
-              <li>✓ Automatic JSON serialization/deserialization</li>
-              <li>✓ Server-side rendering (SSR) compatible</li>
-              <li>✓ TypeScript type definitions included</li>
-            </ul>
-          </section>
-
-          <section id="installation">
-            <h2>Installation</h2>
-            <p>
-              Copy <code>store-provider.js</code> to your project and import it
-              as an ES module:
-            </p>
-            <div class="code-block">
-              import StoreProvider from './store-provider.js';
-            </div>
-          </section>
-
-          <section id="usage">
-            <h2>Getting Started</h2>
-            <h3>Basic Usage</h3>
-            <div class="code-block">
-              // Create a new storage provider instance const storage = new
-              StoreProvider({ storeType: 'localStorage', prefix: 'myapp' }); //
-              Store a value (objects are automatically serialized)
-              storage.setValue('user', { name: 'John', age: 30 }); // Retrieve a
-              value (automatically deserialized) const user =
-              storage.getValue('user'); // Remove a value
-              storage.removeValue('user');
-            </div>
-          </section>
-
-          <section id="api">
-            <h2>API Reference</h2>
-
-            <div id="constructor">
-              <h3>Constructor</h3>
-              <div class="method-card">
-                <h4>
-                  new StoreProvider(options)
-                  <span class="badge">constructor</span>
-                </h4>
-                <p>Creates a new instance of StoreProvider.</p>
-
-                <dl class="param-list">
-                  <dt>options.storeType</dt>
-                  <dd>
-                    Type:
-                    <code>"memory" | "localStorage" | "sessionStorage"</code
-                    ><br />Default: <code>"localStorage"</code><br />The storage
-                    backend to use.
-                  </dd>
-
-                  <dt>options.prefix</dt>
-                  <dd>
-                    Type: <code>string</code><br />Default:
-                    <code>"test-app"</code><br />Prefix for all storage keys to
-                    avoid collisions.
-                  </dd>
-                </dl>
-
-                <div class="example-box">
-                  <strong>Example:</strong>
-                  <div class="code-block">
-                    const storage = new StoreProvider({ storeType:
-                    'sessionStorage', prefix: 'myapp' });
-                  </div>
-                </div>
+            <div class="example-box">
+              <strong>Example:</strong>
+              <div class="code-block">
+                const store = new StoreProvider({ storeType:
+                'sessionStorage', prefix: 'myapp' });
               </div>
             </div>
+          </div>
+        </div>
 
-            <div id="methods">
-              <h3>Methods</h3>
+        <div id="methods">
+          <h3>Methods</h3>
 
-              <div class="method-card">
-                <h4>setValue(key, value) <span class="badge">method</span></h4>
-                <p>Stores a value in the storage backend.</p>
+          <div class="method-card">
+            <h4>setValue(key, value) <span class="badge">method</span></h4>
+            <p>Stores a value in the storage backend.</p>
 
-                <dl class="param-list">
-                  <dt>key</dt>
-                  <dd>
-                    Type: <code>string</code><br />The key under which to store
-                    the value.
-                  </dd>
+            <dl class="param-list">
+              <dt>key</dt>
+              <dd>
+                Type: <code>string</code><br/>The key under which to store
+                the value.
+              </dd>
 
-                  <dt>value</dt>
-                  <dd>
-                    Type: <code>any</code><br />The value to store (will be JSON
-                    serialized).
-                  </dd>
-                </dl>
+              <dt>value</dt>
+              <dd>
+                Type: <code>any</code><br/>The value to store (will be JSON
+                serialized).
+              </dd>
+            </dl>
 
-                <div class="example-box">
-                  <strong>Example:</strong>
-                  <div class="code-block">
-                    storage.setValue('settings', { theme: 'dark', notifications:
-                    true });
-                  </div>
-                </div>
-              </div>
-
-              <div class="method-card">
-                <h4>getValue(key) <span class="badge">method</span></h4>
-                <p>Retrieves a value from the storage backend.</p>
-
-                <dl class="param-list">
-                  <dt>key</dt>
-                  <dd>
-                    Type: <code>string</code><br />The key of the value to
-                    retrieve.
-                  </dd>
-
-                  <dt>Returns</dt>
-                  <dd>
-                    Type: <code>T | string | null</code><br />The stored value
-                    (deserialized) or null if not found.
-                  </dd>
-                </dl>
-
-                <div class="example-box">
-                  <strong>Example:</strong>
-                  <div class="code-block">
-                    const settings = storage.getValue('settings');
-                    console.log(settings); // { theme: 'dark', notifications:
-                    true }
-                  </div>
-                </div>
-              </div>
-
-              <div class="method-card">
-                <h4>removeValue(key) <span class="badge">method</span></h4>
-                <p>Removes a value from the storage backend.</p>
-
-                <dl class="param-list">
-                  <dt>key</dt>
-                  <dd>
-                    Type: <code>string</code><br />The key of the value to
-                    remove.
-                  </dd>
-                </dl>
-
-                <div class="example-box">
-                  <strong>Example:</strong>
-                  <div class="code-block">storage.removeValue('settings');</div>
-                </div>
+            <div class="example-box">
+              <strong>Example:</strong>
+              <div class="code-block">
+                store.setValue('settings', { theme: 'dark', notifications:
+                true });
               </div>
             </div>
-          </section>
+          </div>
 
-          <section id="examples">
-            <h2>Examples</h2>
+          <div class="method-card">
+            <h4>getValue(key) <span class="badge">method</span></h4>
+            <p>Retrieves a value from the storage backend.</p>
 
-            <h3>Using Memory Storage</h3>
-            <div class="code-block">
-              const memoryStorage = new StoreProvider({ storeType: 'memory',
-              prefix: 'temp' }); memoryStorage.setValue('cache', { data: [1, 2,
-              3] });
+            <dl class="param-list">
+              <dt>key</dt>
+              <dd>
+                Type: <code>string</code><br/>The key of the value to
+                retrieve.
+              </dd>
+
+              <dt>Returns</dt>
+              <dd>
+                Type: <code>T | string | null</code><br/>The stored value
+                (deserialized) or null if not found.
+              </dd>
+            </dl>
+
+            <div class="example-box">
+              <strong>Example:</strong>
+              <div class="code-block">
+                const settings = store.getValue('settings');
+                console.log(settings); // { theme: 'dark', notifications:
+                true }
+              </div>
             </div>
+          </div>
 
-            <h3>Using localStorage</h3>
-            <div class="code-block">
-              const localStorage = new StoreProvider({ storeType:
-              'localStorage', prefix: 'myapp' });
-              localStorage.setValue('userPreferences', { language: 'en',
-              timezone: 'UTC' });
+          <div class="method-card">
+            <h4>removeValue(key) <span class="badge">method</span></h4>
+            <p>Removes a value from the storage backend.</p>
+
+            <dl class="param-list">
+              <dt>key</dt>
+              <dd>
+                Type: <code>string</code><br/>The key of the value to
+                remove.
+              </dd>
+            </dl>
+
+            <div class="example-box">
+              <strong>Example:</strong>
+              <div class="code-block">store.removeValue('settings');</div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <h3>Using sessionStorage</h3>
-            <div class="code-block">
-              const sessionStorage = new StoreProvider({ storeType:
-              'sessionStorage', prefix: 'session' });
-              sessionStorage.setValue('tempData', { sessionId: '12345' });
-            </div>
-          </section>
-        </main>
-      </div>
-    </div>
+      <section id="examples">
+        <h2>Examples</h2>
 
-    <footer class="footer">
-      <script>
-        const COPYRIGHT_YEAR = new Date().getFullYear();
-      </script>
+        <h3>Using Memory Storage</h3>
+        <div class="code-block">
+          const memoryStore = new StoreProvider({ storeType: 'memory',
+          prefix: 'temp' }); memoryStore.setValue('cache', { data: [1, 2,
+          3] });
+        </div>
 
-      <p>
-        © <span id="copyright-year"></span> Storage Provider Documentation. All
-        rights reserved.
-      </p>
+        <h3>Using localStorage</h3>
+        <div class="code-block">
+          const localStore = new StoreProvider({ storeType:
+          'localStorage', prefix: 'myapp' });
+          localStore.setValue('userPreferences', { language: 'en',
+          timezone: 'UTC' });
+        </div>
 
-      <script>
-        document.getElementById('copyright-year').textContent =
-          String(COPYRIGHT_YEAR);
-      </script>
-    </footer>
-  </body>
+        <h3>Using sessionStorage</h3>
+        <div class="code-block">
+          const sessionStore = new StoreProvider({ storeType:
+          'sessionStorage', prefix: 'session' });
+          sessionStore.setValue('tempData', { sessionId: '12345' });
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<footer class="footer">
+  <script>
+    const COPYRIGHT_YEAR = new Date().getFullYear();
+  </script>
+
+  <p>
+    © <span id="copyright-year"></span> Store Provider Documentation. All
+    rights reserved.
+  </p>
+
+  <script>
+    document.getElementById('copyright-year').textContent =
+      String(COPYRIGHT_YEAR);
+  </script>
+</footer>
+</body>
 </html>
