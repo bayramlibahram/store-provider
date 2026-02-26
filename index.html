@@ -465,7 +465,19 @@
     </div>
 
     <footer class="footer">
-      <p>&copy; 2024 Storage Provider Documentation. All rights reserved.</p>
+      <script>
+        const COPYRIGHT_YEAR = new Date().getFullYear();
+      </script>
+
+      <p>
+        © <span id="copyright-year"></span> Storage Provider Documentation. All
+        rights reserved.
+      </p>
+
+      <script>
+        document.getElementById('copyright-year').textContent =
+          String(COPYRIGHT_YEAR);
+      </script>
     </footer>
   </body>
 </html>
