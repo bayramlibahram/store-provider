@@ -90,7 +90,9 @@ export default class StoreProvider {
     // @ts-ignore - runtime returns Map or Storage
     this.#currentStorage = factory();
 
-    // If the selected backend is web storage but blocked/unavailable => fallback to memory
+    // Fallback mechanism: If the selected Web Storage backend (localStorage/sessionStorage) is blocked
+    // by browser privacy settings, incognito mode, quota limits, or other restrictions,
+    // automatically switch to in-memory storage to prevent runtime errors and maintain functionality
     if (this.#storeType !== 'memory') {
       const s = /** @type {Storage} */ (this.#currentStorage);
       if (!this.#canUseWebStorage(s)) {
